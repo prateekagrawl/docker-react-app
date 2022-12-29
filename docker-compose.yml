@@ -1,0 +1,24 @@
+version: "3"
+services:
+  dev:
+    build: 
+      context: .
+      dockerfile: Dockerfile.dev
+
+    ports:
+      - "3000:3000"
+    
+    volumes:
+      - /var/app/node_modules  # means we don't want node_modules to be linked to anything(so that .dockerignore is used)
+      - .:/var/app  # volume linkage from current working directory to /var/app
+  
+  test:
+    build: 
+      context: .
+      dockerfile: Dockerfile.dev
+    
+    volumes:
+      - /var/app/node_modules  # means we don't want node_modules to be linked to anything(so that .dockerignore is used)
+      - .:/var/app  
+
+    command: ["npm", "run", "test"]
